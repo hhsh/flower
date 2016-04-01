@@ -1,3 +1,4 @@
 eclipse.preferences.version=1
-encoding//ejbModule/com/hhsh/test/EAM_Project.java=UTF-8
-encoding//ejbModule/com/hhsh/test/FileIO.java=UTF-8
+encoding//src/com/hajea/file/EAM_Project.java=UTF-8
+encoding//src/com/hajea/file/FileIO.java=UTF-8
+encoding/<project>=UTF-8

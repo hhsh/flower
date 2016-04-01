@@ -1,4 +1,4 @@
-package com.hhsh.test;
+package com.hajea.file;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;

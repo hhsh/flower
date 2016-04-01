@@ -1,4 +1,4 @@
-package com.hhsh.test;
+package com.hajea.file;
  
 
 import java.io.BufferedInputStream;
@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
@@ -24,14 +25,39 @@ public class FileIO{
 	/*
 	 * 读一个文件，并返回字符串
 	 */
+	
+	public static String read(InputStream is ) {
+		String line = null;		
+		StringBuffer strBuf = new StringBuffer();		
+		BufferedReader bufReader = null;
+		try {
+			InputStreamReader isr = new InputStreamReader(is,"UTF-8") ;
+			bufReader = new BufferedReader(isr);
+			while ((line = bufReader.readLine()) != null) {			 
+				strBuf.append(line);
+				strBuf.append(System.getProperty("line.separator"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (bufReader != null) {
+				try {
+					bufReader.close();
+				} catch (IOException e) {
+					bufReader = null;
+				}
+			}
+		}
+		return strBuf.toString();
+	}
 	public static String read(String fullFilePath ) {
 		String line = null;		
 		StringBuffer strBuf = new StringBuffer();		
 		BufferedReader bufReader = null;
 		try {
 			FileInputStream fis = new FileInputStream(fullFilePath);
-			InputStreamReader is = new InputStreamReader(fis,"UTF-8") ;
-			bufReader = new BufferedReader(is);
+			InputStreamReader isr = new InputStreamReader(fis,"UTF-8") ;
+			bufReader = new BufferedReader(isr);
 			while ((line = bufReader.readLine()) != null) {			 
 				strBuf.append(line);
 				strBuf.append(System.getProperty("line.separator"));
@@ -74,7 +100,7 @@ public class FileIO{
 	
 
 	/*
-	 * 将内容回写到文件中
+	 * 将内容回写到文件�?
 	 */
 	public static void write(String filePath, String content,String code) {
 		BufferedWriter bw = null;
@@ -129,7 +155,7 @@ public class FileIO{
 	public void fileAppender(String fileName, String content)throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(fileName));
 		String line = null;
-		// 一行一行的读
+		// �?行一行的�?
 		StringBuilder sb = new StringBuilder();
 		sb.append(content);
 		while ((line = reader.readLine()) != null) {
@@ -138,7 +164,7 @@ public class FileIO{
 		}
 		reader.close();
 
-		// 写回去
+		// 写回�?
 		RandomAccessFile mm = new RandomAccessFile(fileName, "rw");
 		mm.writeBytes(sb.toString());
 		mm.close();
@@ -147,8 +173,9 @@ public class FileIO{
 	 
 	public static void main(String[] args) { 
 		 
-		String filePath = "E:/eclipseEE5-EJB/first/ejbModule/com/hhsh/test/EAM_Project.java";
-		String rs = read(filePath);
+		String path = "F:\\git-repo\\work_tool\\WORK_TOOL\\src\\com\\hajea\\file\\EAM_Project.java";
+		//InputStream is = FileIO.class.getResourceAsStream();
+		String rs = read(path);
 		//System.out.println(rs);
 		
 		//String regex = "^\\s*private(.*)$";
