@@ -17,6 +17,8 @@ import java.io.RandomAccessFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.hajea.path.Path;
+
 /**
  * 修改文件
  */
@@ -172,11 +174,7 @@ public class FileIO{
 
 	 
 	public static void main(String[] args) { 
-		String buildPathRoot = FileIO.class.getClassLoader().getResource("").getPath();
-		String projectRoot = buildPathRoot.replace("build/classes/", "");
-		String sourceCodeRoot = projectRoot + "src/";
-		
-		String path = sourceCodeRoot  + "com/hajea/entity/Project.java";
+		String path = Path.sourceCodeRoot  + "com/hajea/entity/Project.java";
 		 
 		String rs = read(path);
 		//System.out.println(rs);
