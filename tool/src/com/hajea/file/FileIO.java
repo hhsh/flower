@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
+import java.nio.channels.FileChannel;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -84,20 +86,39 @@ public class FileIO{
 	public static void saveFile(String fullFilePath,String fullsavePath ){
 		BufferedInputStream bin = null;
 		BufferedOutputStream bout = null;
-		byte [] buf=new byte[1024];
+		byte [] buf = new byte[1024];
 		try	{
 			bin = new BufferedInputStream(new FileInputStream(fullFilePath));
-			int in =bin.read(buf) ;			
-			bout=new BufferedOutputStream(new FileOutputStream(fullsavePath));
-			while(in!=-1) {
-				bout.write(buf);
+			bout = new BufferedOutputStream(new FileOutputStream(fullsavePath));
+			int numBytes; 
+			while ((numBytes = bin.read(buf))!= -1)	{		
+				 bout.write(buf,0,numBytes); 
 			}
-			bout.close();
-			bin.close();			 
+			 bin.close();
+		     bout.close();
+					 
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}finally{ 
+			 
+		}
+		
 	}
+	
+	public static void saveFileByChannel(String fullFilePath,String fullsavePath ) {
+		try(FileChannel from = new FileInputStream(fullFilePath).getChannel();
+			FileChannel to = new FileOutputStream(fullsavePath).getChannel();){
+			to.transferFrom(from, 0, from.size());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
+	}
+	
+	
+	
 	
 	
 
@@ -174,25 +195,11 @@ public class FileIO{
 
 	 
 	public static void main(String[] args) { 
-		String path = Path.sourceCodeRoot  + "com/hajea/entity/Project.java";
-		 
-		String rs = read(path);
-		//System.out.println(rs);
-		
-		//String regex = "^\\s*private(.*)$";
-		String regex = "^\\s*private\\s*(\\w+)\\s*(\\w+)\\s*;\\s*//\\s*(\\S+)\\s*$";
-		
-		
-		Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
-		Matcher matcher = pattern.matcher(rs);
-		while (matcher.find()) {
-			String gp1 = matcher.group(1);
-			String gp2 = matcher.group(2);
-			String gp3 = matcher.group(3);
-			System.out.println(gp1 + ":" + gp2 + ":" + gp3);
-		}
-		
-		
+
+		String f1 = "F:/git-repo/java/tool/file/ss/basic/EvenChecker.java";
+		String f2 = "F:/git-repo/java/tool/file/ss/basic/EvenChecker.java";
+		//FileIO.saveFileByChannel(f1,f2);
+		//FileIO.saveFile(f1,f2);
 	}
 
 }
