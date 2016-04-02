@@ -1,4 +1,4 @@
-package com.hajea.file;
+package com.hajea.bean;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -7,10 +7,12 @@ import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.hajea.entity.Project;
+
 public class BeanProperties {
 
 	public static void main(String[] args) throws Throwable {
-		Class<? extends Object> type = EAM_Project.class;
+		Class<? extends Object> type = Project.class;
 	 
 		BeanInfo beanInfo = Introspector.getBeanInfo(type);
 		PropertyDescriptor[] pdArr = beanInfo.getPropertyDescriptors();

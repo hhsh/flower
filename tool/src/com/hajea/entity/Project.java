@@ -1,9 +1,9 @@
-package com.hajea.file;
+package com.hajea.entity;
 
 import java.util.Date;
 
 
-class EAM_Project  {
+public class Project  {
 	private Long   p_Id; //项目编号	 
 	private String a_Xmxh;  //序号
 	private Date p_Jgrq; //日期

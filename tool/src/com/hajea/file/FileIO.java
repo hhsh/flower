@@ -172,9 +172,12 @@ public class FileIO{
 
 	 
 	public static void main(String[] args) { 
+		String buildPathRoot = FileIO.class.getClassLoader().getResource("").getPath();
+		String projectRoot = buildPathRoot.replace("build/classes/", "");
+		String sourceCodeRoot = projectRoot + "src/";
+		
+		String path = sourceCodeRoot  + "com/hajea/entity/Project.java";
 		 
-		String path = "F:\\git-repo\\work_tool\\WORK_TOOL\\src\\com\\hajea\\file\\EAM_Project.java";
-		//InputStream is = FileIO.class.getResourceAsStream();
 		String rs = read(path);
 		//System.out.println(rs);
 		
