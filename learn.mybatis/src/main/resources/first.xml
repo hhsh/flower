@@ -1,0 +1,38 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hhsh.dao.Test">
+	<resultMap type="mybatis.User" id="userMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="score" property="score"/>
+	</resultMap>
+
+<!-- http://lavasoft.blog.51cto.com/62575/1386870 -->
+	<select id="getUser" parameterType ="java.util.HashMap" resultMap="userMap">
+		select id,name,score from user where 1=1 
+		<if test="name != null">
+    		AND name like   "%"#{name}"%"
+  		</if>  
+	</select>
+	
+	<select id="selectUserIn" resultType="userType">
+	  select *
+	  from user t
+	  where id in
+	  <foreach item="item" index="index" collection="list"
+	      open="(" separator="," close=")">
+	        #{item}
+	  </foreach>
+	</select> 
+	
+	<insert id="insert">
+	    insert into users (id, name, funkyNumber, roundingMode) values (
+	    	#{id}, #{name}, #{funkyNumber}, #{roundingMode}
+	    )
+	</insert> 
+	
+	
+	
+</mapper>
